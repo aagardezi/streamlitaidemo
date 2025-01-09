@@ -82,7 +82,7 @@ if "messages" not in st.session_state:
 if "aicontent" not in st.session_state:
     st.session_state.aicontent = []
 
-if "gemini_client" in st.session_state:
+if "gemini_client" not in st.session_state:
     st.session_state.gemini_client = genai.Client(
         vertexai=True,
         project=PROJECT_ID,
