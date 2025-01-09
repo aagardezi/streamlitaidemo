@@ -118,7 +118,7 @@ if prompt := st.chat_input("What is up?"):
                     params[key] = value
 
                 function_name = response.function_call.name
-                function_call_result = helpercode.function_handler[function_name](params)
+                function_call_result = helpercode.function_handler[function_name]()
                 api_requests_and_responses.append([function_name, params, function_call_result])
                 st.session_state.aicontent.append(response)
                 st.session_state.aicontent.append(types.Part.from_function_response(
