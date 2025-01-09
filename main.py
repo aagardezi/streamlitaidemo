@@ -89,6 +89,10 @@ if "gemini_client" not in st.session_state:
         location=LOCATION
     )
 
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
+
 if prompt := st.chat_input("What is up?"):
     st.session_state.messages.append({"role": "user", "content": prompt})
 
@@ -122,6 +126,7 @@ if prompt := st.chat_input("What is up?"):
                                 "result": function_call_result,
                             },))
                 response = st.session_state.gemini_client.models.generate_content(model=MODEL_NAME, contents=st.session_state.aicontent, config=generate_config_20)
+                print(response)
                 backend_details = handle_api_response(message_placeholder, api_requests_and_responses, backend_details)
                 st.session_state.aicontent.append(response.candidates[0].content)
                 response = response.candidates[0].content.parts[0]
