@@ -3,6 +3,7 @@ from google import genai
 from google.genai import types
 import gemini20functiongeneral
 import helpercode
+import logging
 
 PROJECT_ID = helpercode.get_project_id()
 LOCATION = "us-central1"
@@ -126,7 +127,7 @@ if prompt := st.chat_input("What is up?"):
                                 "result": function_call_result,
                             },))
                 response = st.session_state.gemini_client.models.generate_content(model=MODEL_NAME, contents=st.session_state.aicontent, config=generate_config_20)
-                print(response)
+                logging.warning(response)
                 backend_details = handle_api_response(message_placeholder, api_requests_and_responses, backend_details)
                 st.session_state.aicontent.append(response.candidates[0].content)
                 response = response.candidates[0].content.parts[0]
