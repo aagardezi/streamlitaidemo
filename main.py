@@ -100,7 +100,7 @@ if prompt := st.chat_input("What is up?"):
 
         st.session_state.aicontent.append(types.Content(role='user', parts=[types.Part(text=prompt)]))
         response =st.session_state.gemini_client.models.generate_content(model=MODEL_NAME, 
-                                                    content=st.session_state.aicontent, 
+                                                    contents=st.session_state.aicontent, 
                                                     config=generate_config_20)
         response = response.candidates[0].content.parts[0]
         api_requests_and_responses = []
@@ -121,7 +121,7 @@ if prompt := st.chat_input("What is up?"):
                             response={
                                 "result": function_call_result,
                             },))
-                response = st.session_state.gemini_client.models.generate_content(model=MODEL_NAME, content=st.session_state.aicontent, config=generate_config_20)
+                response = st.session_state.gemini_client.models.generate_content(model=MODEL_NAME, contents=st.session_state.aicontent, config=generate_config_20)
                 backend_details = handle_api_response(message_placeholder, api_requests_and_responses, backend_details)
                 st.session_state.aicontent.append(response.candidates[0].content)
                 response = response.candidates[0].content.parts[0]
