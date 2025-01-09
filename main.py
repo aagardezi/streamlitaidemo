@@ -131,7 +131,8 @@ if prompt := st.chat_input("What is up?"):
                 backend_details = handle_api_response(message_placeholder, api_requests_and_responses, backend_details)
                 st.session_state.aicontent.append(response.candidates[0].content)
                 response = response.candidates[0].content.parts[0]
-            except:
+            except AttributeError as e:
+                logging.warning(e)
                 function_calling_in_process = False
         
         full_response = response.text
