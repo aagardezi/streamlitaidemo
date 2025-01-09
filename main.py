@@ -82,17 +82,12 @@ if "messages" not in st.session_state:
 if "aicontent" not in st.session_state:
     st.session_state.aicontent = []
 
-for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
-
-for "gemini_client" in st.session_state:
+if "gemini_client" in st.session_state:
     st.session_state.gemini_client = genai.Client(
         vertexai=True,
         project=PROJECT_ID,
         location=LOCATION
     )
-
 
 if prompt := st.chat_input("What is up?"):
     st.session_state.messages.append({"role": "user", "content": prompt})
@@ -138,6 +133,6 @@ if prompt := st.chat_input("What is up?"):
             st.markdown(full_response.replace("$", r"\$"))  # noqa: W605
             with st.expander("Function calls, parameters, and responses:"):
                 st.markdown(backend_details)
-            
+
         st.session_state.messages.append({"role": "assistant", "content": full_response})
 
